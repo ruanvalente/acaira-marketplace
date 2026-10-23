@@ -1,0 +1,508 @@
+# Açaíra --- Supabase Architecture
+
+## 1. Purpose
+
+This document defines how Supabase is used as the backend platform for
+Açaíra.
+
+Supabase provides:
+
+- Authentication.
+- PostgreSQL.
+- Storage.
+- Realtime.
+- Row Level Security.
+
+The frontend must treat Supabase as an infrastructure layer, not as a
+replacement for domain boundaries.
+
+## 2. Supabase Components
+
+```text
+Supabase
+├── Auth
+├── PostgreSQL
+├── Storage
+├── Realtime
+└── RLS
+```
+
+## 3. Authentication
+
+Use Supabase Auth for:
+
+- Email/password registration.
+- Login.
+- Logout.
+- Password recovery.
+- Password reset.
+- Session management.
+
+The frontend must never implement its own authentication system.
+
+## 4. Profiles
+
+Supabase Auth manages authentication identities.
+
+Application-specific user information belongs in:
+
+```text
+profiles
+```
+
+Suggested fields:
+
+```text
+id
+display_name
+avatar_path
+phone
+location
+created_at
+updated_at
+```
+
+The profile ID should reference the authenticated user's ID.
+
+## 5. Database Entities
+
+Initial database entities:
+
+```text
+profiles
+categories
+products
+product_images
+favorites
+conversations
+conversation_participants
+messages
+reports
+notifications
+```
+
+Do not create all entities before the corresponding feature requires
+them.
+
+## 6. Products
+
+Suggested structure:
+
+```text
+products
+├── id
+├── seller_id
+├── category_id
+├── title
+├── description
+├── price
+├── condition
+├── location
+├── contact_phone
+├── contact_email
+├── status
+├── created_at
+└── updated_at
+```
+
+The exact schema should be finalized during the Products/Listings
+implementation phase.
+
+## 7. Product Status
+
+Suggested statuses:
+
+```text
+draft
+active
+paused
+sold
+removed
+```
+
+Only `active` products should appear in the public marketplace.
+
+## 8. Product Images
+
+Use:
+
+```text
+product_images
+```
+
+Suggested fields:
+
+```text
+id
+product_id
+storage_path
+sort_order
+is_primary
+created_at
+```
+
+Product images should be stored in Supabase Storage.
+
+Recommended conceptual bucket:
+
+```text
+product-images
+```
+
+The exact public/private strategy must follow the final product
+requirements.
+
+## 9. Storage
+
+Initial storage areas:
+
+```text
+product-images
+avatars
+chat-images
+```
+
+### Product Images
+
+Used by public listings.
+
+### Avatars
+
+Used by profiles and seller information.
+
+### Chat Images
+
+Must be protected according to conversation membership.
+
+Do not make private chat images publicly accessible by default.
+
+## 10. Row Level Security
+
+RLS is mandatory.
+
+The frontend must never be considered the final authorization layer.
+
+### Profiles
+
+Users can update their own profile.
+
+Users should only access profile fields intended to be public.
+
+### Products
+
+Public users can read active products.
+
+Authenticated users can create products.
+
+Users can update and delete only products where:
+
+```text
+products.seller_id = auth.uid()
+```
+
+### Favorites
+
+Users can only create, read, and delete their own favorites.
+
+### Conversations
+
+Users can only access conversations where they are participants.
+
+### Messages
+
+Users can only access messages belonging to conversations in which they
+participate.
+
+## 11. Realtime
+
+Supabase Realtime should be used for:
+
+### Chat
+
+- New messages.
+- Message updates.
+- Read status.
+
+### Presence
+
+- Online/offline state.
+
+### Typing
+
+Typing indicators can use realtime presence/broadcast mechanisms rather
+than persistent database records.
+
+Do not persist transient typing state unless there is a clear
+requirement.
+
+## 12. Conversation Model
+
+A conversation should have a product context.
+
+Conceptually:
+
+```text
+products
+   │
+   ▼
+conversations
+   │
+   ├── buyer
+   ├── seller
+   │
+   ▼
+messages
+```
+
+Suggested entities:
+
+```text
+conversations
+conversation_participants
+messages
+```
+
+A conversation should not exist independently from its product context
+in the MVP.
+
+## 13. Message Model
+
+Suggested fields:
+
+```text
+messages
+├── id
+├── conversation_id
+├── sender_id
+├── message_type
+├── content
+├── attachment_path
+├── created_at
+└── read_at
+```
+
+Possible message types:
+
+```text
+text
+image
+```
+
+Additional types can be added later.
+
+## 14. File Upload Security
+
+Validate uploads before storing them.
+
+Consider:
+
+- MIME type.
+- File extension.
+- Maximum size.
+- Image dimensions.
+- Upload ownership.
+- Storage policy.
+
+Never trust a file extension supplied by the client.
+
+## 15. Database Access Pattern
+
+Avoid putting large Supabase queries directly inside UI components.
+
+Preferred:
+
+```text
+Component
+    ↓
+Hook / Server Action
+    ↓
+Feature Service
+    ↓
+Supabase
+```
+
+Example:
+
+```text
+ProductPage
+    ↓
+useProduct()
+    ↓
+products.service.ts
+    ↓
+Supabase
+```
+
+## 16. Server and Browser Clients
+
+Use the correct Supabase client depending on execution context.
+
+Browser interactions should use the browser-safe client.
+
+Server-side operations should use the server-compatible client.
+
+The Supabase service-role key must never be exposed to browser code.
+
+## 17. Environment Variables
+
+Only public configuration may use client-exposed variables.
+
+Never expose:
+
+```text
+SUPABASE_SERVICE_ROLE_KEY
+```
+
+to the browser.
+
+Environment configuration should be centralized and validated.
+
+## 18. Migrations
+
+All schema changes must be versioned.
+
+Use migrations for:
+
+- Tables.
+- Columns.
+- Indexes.
+- Constraints.
+- RLS policies.
+- Functions.
+- Triggers.
+
+Never depend on undocumented manual dashboard changes for
+application-critical schema.
+
+## 19. Indexing
+
+Add indexes based on real query patterns.
+
+Likely candidates include:
+
+```text
+products.status
+products.category_id
+products.seller_id
+products.created_at
+favorites.user_id
+messages.conversation_id
+messages.created_at
+conversation_participants.user_id
+```
+
+Do not add indexes blindly.
+
+Review query plans as the dataset grows.
+
+## 20. Search
+
+The initial implementation can use PostgreSQL capabilities appropriate
+to the MVP.
+
+Search should support:
+
+- Product title.
+- Description where appropriate.
+- Category.
+- Price.
+- Location.
+
+Search parameters should preferably be represented in the URL.
+
+Example:
+
+```text
+/products?q=iphone&category=electronics&sort=recent
+```
+
+For larger datasets, evaluate PostgreSQL full-text search or a dedicated
+search solution.
+
+## 21. Pagination
+
+Never fetch the entire marketplace dataset.
+
+Use pagination or another bounded query strategy.
+
+Product listings should have:
+
+- Explicit page size.
+- Stable ordering.
+- Appropriate indexes.
+
+## 22. Realtime Subscription Rules
+
+Realtime subscriptions must be scoped narrowly.
+
+Do not subscribe an entire application to all messages.
+
+Example:
+
+```text
+Current conversation
+        ↓
+Subscribe only to relevant events
+```
+
+Unsubscribe when the component or route no longer requires the
+subscription.
+
+## 23. Security Checklist
+
+Before considering Supabase integration complete:
+
+```text
+[ ] Auth configured
+[ ] Profiles protected
+[ ] Product RLS configured
+[ ] Listing ownership enforced
+[ ] Favorites protected
+[ ] Conversations protected
+[ ] Messages protected
+[ ] Storage policies configured
+[ ] Chat images protected
+[ ] Service role key not exposed
+[ ] Upload validation implemented
+[ ] Database migrations versioned
+[ ] Sensitive fields reviewed
+```
+
+## 24. Development Order
+
+Supabase implementation should follow the application phases:
+
+```text
+Foundation
+    ↓
+Auth
+    ↓
+Profiles
+    ↓
+Products
+    ↓
+Listings
+    ↓
+Favorites
+    ↓
+Chat
+    ↓
+Notifications
+    ↓
+Security hardening
+```
+
+Do not build the entire database schema before implementing the
+corresponding modules.
+
+## 25. Guiding Principle
+
+Supabase should provide reliable infrastructure while the application
+retains clear domain boundaries.
+
+The frontend should not become a collection of arbitrary Supabase
+queries.
+
+Database access, authorization, storage and realtime behavior must
+remain understandable, testable and aligned with the feature/module
+architecture.

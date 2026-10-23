@@ -1,0 +1,2 @@
+-- Açaíra initial migration placeholder
+-- Add schema as features are implemented
