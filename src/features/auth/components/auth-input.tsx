@@ -1,4 +1,5 @@
 import * as React from "react"
+import type { LucideIcon } from "lucide-react"
 
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -9,6 +10,12 @@ type AuthInputProps = Omit<React.ComponentProps<typeof Input>, "id"> & {
   label: string
   error?: string
   hint?: string
+  /** Ícone decorativo exibido à esquerda do campo. */
+  icon?: LucideIcon
+  /** Ação opcional alinhada à direita do label (ex.: "Esqueceu a senha?"). */
+  labelAction?: React.ReactNode
+  /** Elemento interativo exibido à direita do campo (ex.: mostrar senha). */
+  endAdornment?: React.ReactNode
 }
 
 /**
@@ -20,6 +27,9 @@ export function AuthInput({
   label,
   error,
   hint,
+  icon: Icon,
+  labelAction,
+  endAdornment,
   className,
   ...props
 }: AuthInputProps) {
@@ -31,14 +41,35 @@ export function AuthInput({
 
   return (
     <div className="space-y-2">
-      <Label htmlFor={id}>{label}</Label>
-      <Input
-        id={id}
-        aria-invalid={error ? true : undefined}
-        aria-describedby={describedBy}
-        className={cn("h-11", className)}
-        {...props}
-      />
+      <div className="flex items-center justify-between gap-3">
+        <Label htmlFor={id}>{label}</Label>
+        {labelAction}
+      </div>
+      <div className="relative">
+        {Icon ? (
+          <Icon
+            aria-hidden="true"
+            className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
+          />
+        ) : null}
+        <Input
+          id={id}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={describedBy}
+          className={cn(
+            "h-11",
+            Icon && "pl-10",
+            endAdornment && "pr-12",
+            className
+          )}
+          {...props}
+        />
+        {endAdornment ? (
+          <div className="absolute inset-y-0 right-0 flex items-center pr-1">
+            {endAdornment}
+          </div>
+        ) : null}
+      </div>
       {hint ? (
         <p id={hintId} className="text-xs text-muted-foreground">
           {hint}

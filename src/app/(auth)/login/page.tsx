@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import { Suspense } from "react"
 
 import { AuthFormSkeleton } from "@/features/auth/components/auth-form-skeleton"
-import { AuthShell } from "@/features/auth/components/auth-shell"
 import { LoginForm } from "@/features/auth/components/login-form"
+import { LoginPage } from "@/features/auth/components/login-page"
 import { RedirectIfAuthenticated } from "@/features/auth/components/session-gate"
 
 export const metadata: Metadata = {
@@ -11,17 +11,16 @@ export const metadata: Metadata = {
   description: "Acesse sua conta Açaíra para anunciar e conversar com vendedores.",
 }
 
-export default function LoginPage() {
+export default function LoginRoute() {
   return (
-    <AuthShell
-      title="Entrar"
-      description="Acesse sua conta para anunciar, favoritar e conversar com vendedores."
-    >
-      <Suspense fallback={<AuthFormSkeleton />}>
-        <RedirectIfAuthenticated>
-          <LoginForm />
-        </RedirectIfAuthenticated>
-      </Suspense>
-    </AuthShell>
+    <LoginPage
+      form={
+        <Suspense fallback={<AuthFormSkeleton />}>
+          <RedirectIfAuthenticated>
+            <LoginForm />
+          </RedirectIfAuthenticated>
+        </Suspense>
+      }
+    />
   )
 }

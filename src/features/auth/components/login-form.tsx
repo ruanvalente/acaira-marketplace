@@ -1,8 +1,9 @@
 "use client"
 
 import Link from "next/link"
-import { useActionState } from "react"
+import { useActionState, useState } from "react"
 import { useSearchParams } from "next/navigation"
+import { ArrowRight, Loader2, Mail } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
@@ -17,6 +18,7 @@ import {
 import { AuthInput } from "./auth-input"
 import { AuthNotice } from "./auth-notice"
 import { FormAlert } from "./form-alert"
+import { PasswordInput } from "./password-input"
 
 const FIELDS: readonly AuthField[] = ["email", "password"]
 
@@ -40,6 +42,7 @@ export function LoginForm() {
     submitLogin,
     initialAuthState
   )
+  const [remember, setRemember] = useState(false)
   const searchParams = useSearchParams()
   const redirectTo = searchParams.get("next") ?? ""
   const errors = state.fieldErrors ?? {}
@@ -61,49 +64,64 @@ export function LoginForm() {
         name="email"
         type="email"
         label="E-mail"
+        placeholder="seu.email@exemplo.com"
         autoComplete="email"
         inputMode="email"
+        icon={Mail}
         required
         error={errors.email}
+        className="h-12 rounded-lg bg-surface-container-low"
       />
 
-      <AuthInput
+      <PasswordInput
         id="password"
         name="password"
-        type="password"
         label="Senha"
+        placeholder="••••••••"
         autoComplete="current-password"
         required
         error={errors.password}
+        className="h-12 rounded-lg bg-surface-container-low"
+        labelAction={
+          <Link
+            href="/forgot-password"
+            className="rounded-sm text-sm font-medium text-primary transition-colors hover:text-primary-hover hover:underline focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+          >
+            Esqueceu a senha?
+          </Link>
+        }
       />
 
-      <div className="flex justify-end">
-        <Link
-          href="/forgot-password"
-          className="rounded-sm text-sm text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
-        >
-          Esqueci minha senha
-        </Link>
-      </div>
+      <label className="flex cursor-pointer items-start gap-2.5 text-sm leading-5 text-muted-foreground">
+        <input
+          type="checkbox"
+          name="remember"
+          value="true"
+          checked={remember}
+          onChange={(event) => setRemember(event.target.checked)}
+          className="mt-0.5 size-4 shrink-0 cursor-pointer rounded border-input accent-primary focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+        />
+        <span>Lembrar de mim neste dispositivo</span>
+      </label>
 
       <Button
         type="submit"
-        className="h-11 w-full"
+        className="h-13 w-full rounded-lg bg-primary text-base font-semibold text-primary-foreground shadow-sm hover:bg-primary-hover active:bg-primary-strong"
         disabled={pending}
         aria-busy={pending}
       >
-        {pending ? "Entrando..." : "Entrar"}
+        {pending ? (
+          <>
+            <Loader2 aria-hidden="true" className="size-4 animate-spin" />
+            Entrando...
+          </>
+        ) : (
+          <>
+            Entrar na conta
+            <ArrowRight aria-hidden="true" className="size-4" />
+          </>
+        )}
       </Button>
-
-      <p className="text-center text-sm text-muted-foreground">
-        Ainda não tem conta?{" "}
-        <Link
-          href="/register"
-          className="text-primary underline-offset-4 hover:underline"
-        >
-          Criar conta
-        </Link>
-      </p>
     </form>
   )
 }

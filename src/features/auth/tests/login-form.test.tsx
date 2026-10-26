@@ -30,7 +30,7 @@ function fillCredentials(
 }
 
 function submit() {
-  fireEvent.click(screen.getByRole("button", { name: "Entrar" }));
+  fireEvent.click(screen.getByRole("button", { name: "Entrar na conta" }));
 }
 
 describe("LoginForm", () => {
@@ -44,7 +44,51 @@ describe("LoginForm", () => {
 
     expect(screen.getByLabelText("E-mail")).toBeInTheDocument();
     expect(screen.getByLabelText("Senha")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Entrar" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Entrar na conta" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "Esqueceu a senha?" })
+    ).toHaveAttribute("href", "/forgot-password");
+  });
+
+  it("alterna a visibilidade da senha mantendo o label acessível", () => {
+    render(<LoginForm />);
+
+    const password = screen.getByLabelText("Senha");
+    expect(password).toHaveAttribute("type", "password");
+
+    const showButton = screen.getByRole("button", { name: "Mostrar senha" });
+    expect(showButton).toHaveAttribute("aria-pressed", "false");
+
+    fireEvent.click(showButton);
+
+    expect(password).toHaveAttribute("type", "text");
+    expect(
+      screen.getByRole("button", { name: "Ocultar senha" })
+    ).toHaveAttribute("aria-pressed", "true");
+  });
+
+  it("envia o estado do lembrar de mim", async () => {
+    vi.mocked(loginAction).mockResolvedValue({ status: "idle" });
+
+    render(<LoginForm />);
+    fillCredentials();
+
+    const remember = screen.getByRole("checkbox", {
+      name: "Lembrar de mim neste dispositivo",
+    });
+    expect(remember).not.toBeChecked();
+
+    fireEvent.click(remember);
+    expect(remember).toBeChecked();
+
+    submit();
+
+    await waitFor(() => expect(loginAction).toHaveBeenCalledTimes(1));
+
+    const [, formData] = vi.mocked(loginAction).mock.calls[0];
+    expect(formData.get("remember")).toBe("true");
   });
 
   it("mostra validação inline e não chama o servidor quando vazio", async () => {
