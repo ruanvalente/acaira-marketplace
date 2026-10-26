@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center px-4 py-16">
+    <main className="flex flex-1 flex-col items-center justify-center px-4 py-16">
       <div className="container mx-auto flex max-w-2xl flex-col items-center text-center">
         <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
           Açaíra

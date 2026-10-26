@@ -1,0 +1,63 @@
+import type { Metadata } from "next"
+import { Suspense } from "react"
+
+import { Skeleton } from "@/components/ui/skeleton"
+import { LogoutButton } from "@/features/auth/components/logout-button"
+import { requireUser } from "@/features/auth/services/session.service"
+
+export const metadata: Metadata = {
+  title: "Minha conta | Açaíra",
+}
+
+/**
+ * Área autenticada mínima criada na fase de autenticação.
+ * O dashboard completo pertence ao módulo `dashboard` (fase 7).
+ */
+export default function DashboardPage() {
+  return (
+    <main className="container mx-auto flex w-full flex-1 px-4 py-10">
+      <Suspense fallback={<DashboardSkeleton />}>
+        <DashboardContent />
+      </Suspense>
+    </main>
+  )
+}
+
+async function DashboardContent() {
+  const user = await requireUser("/dashboard")
+
+  return (
+    <div className="mx-auto w-full max-w-2xl space-y-6">
+      <header className="space-y-2">
+        <h1 className="text-2xl font-semibold tracking-tight">Minha conta</h1>
+        <p className="text-sm text-muted-foreground">
+          {user.email
+            ? `Você está conectado como ${user.email}.`
+            : "Você está conectado."}
+        </p>
+      </header>
+
+      <section className="space-y-4 rounded-xl border bg-card p-6">
+        <h2 className="text-lg font-semibold">Área do usuário em construção</h2>
+        <p className="text-sm text-muted-foreground">
+          Em breve você vai gerenciar seus anúncios, favoritos e conversas por
+          aqui. Enquanto isso, explore o marketplace ou saia da sua conta.
+        </p>
+        <LogoutButton />
+      </section>
+    </div>
+  )
+}
+
+function DashboardSkeleton() {
+  return (
+    <div className="mx-auto w-full max-w-2xl space-y-6" aria-busy="true">
+      <span role="status" className="sr-only">
+        Carregando sua conta…
+      </span>
+      <Skeleton className="h-8 w-48" />
+      <Skeleton className="h-4 w-72" />
+      <Skeleton className="h-40 w-full" />
+    </div>
+  )
+}
