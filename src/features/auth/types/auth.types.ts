@@ -8,8 +8,10 @@
 export type AuthField =
   | "name"
   | "email"
+  | "municipality"
   | "password"
-  | "passwordConfirmation";
+  | "passwordConfirmation"
+  | "termsAccepted";
 
 export type AuthFieldErrors = Partial<Record<AuthField, string>>;
 

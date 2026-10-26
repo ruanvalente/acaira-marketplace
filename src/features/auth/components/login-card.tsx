@@ -5,7 +5,6 @@ import { Compass } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 import { BrandLogo } from "./brand-logo"
-import { SocialDivider, SocialLogin } from "./social-login"
 
 type LoginCardProps = {
   /** Formulário de login renderizado pelo Server Component da rota. */
@@ -51,18 +50,13 @@ export function LoginCard({ form }: LoginCardProps) {
 
       <div className="mt-6">{form}</div>
 
-      <div className="mt-6 space-y-4">
-        <SocialDivider />
-        <SocialLogin />
-      </div>
-
       <div className="mt-auto border-t border-border pt-6">
         <Button
           asChild
           variant="outline"
           className="h-11 w-full rounded-lg text-sm font-medium"
         >
-          <Link href="/cadastro">Criar conta grátis</Link>
+          <Link href="/register">Criar conta grátis</Link>
         </Button>
       </div>
     </section>

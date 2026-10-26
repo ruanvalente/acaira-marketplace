@@ -1,3 +1,4 @@
+import { isParaMunicipality } from "../data/para-municipalities";
 import type { AuthFieldErrors } from "../types/auth.types";
 
 export const PASSWORD_MIN_LENGTH = 8;
@@ -7,6 +8,26 @@ export const NAME_MAX_LENGTH = 80;
 export const EMAIL_MAX_LENGTH = 254;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const PASSWORD_NUMBER_OR_SYMBOL_PATTERN = /[\p{N}]|[^\p{L}\p{N}\s]/u;
+
+/**
+ * Requisitos exibidos em tempo real no cadastro.
+ * A mesma regra é aplicada no cliente e no servidor por `validateNewPassword`.
+ */
+export const PASSWORD_REQUIREMENTS = [
+  {
+    id: "length",
+    label: `Pelo menos ${PASSWORD_MIN_LENGTH} caracteres`,
+    test: (value: string) => value.length >= PASSWORD_MIN_LENGTH,
+  },
+  {
+    id: "number-or-symbol",
+    label: "Pelo menos um número ou símbolo",
+    test: (value: string) => PASSWORD_NUMBER_OR_SYMBOL_PATTERN.test(value),
+  },
+] as const;
+
+export type PasswordRequirement = (typeof PASSWORD_REQUIREMENTS)[number];
 
 export type ValidationResult<T> =
   | { ok: true; data: T }
@@ -20,7 +41,10 @@ export type LoginInput = {
 export type RegisterInput = {
   name: string;
   email: string;
+  municipality: string;
   password: string;
+  termsAccepted: boolean;
+  marketingOptIn: boolean;
 };
 
 export type ForgotPasswordInput = {
@@ -34,6 +58,11 @@ export type ResetPasswordInput = {
 function readField(formData: FormData, field: string): string {
   const value = formData.get(field);
   return typeof value === "string" ? value : "";
+}
+
+function readCheckbox(formData: FormData, field: string): boolean {
+  const value = formData.get(field);
+  return value === "on" || value === "true" || value === "1";
 }
 
 function normalizeEmail(value: string): string {
@@ -73,6 +102,10 @@ function validateNewPassword(value: string): string | undefined {
 
   if (value.length > PASSWORD_MAX_LENGTH) {
     return `A senha deve ter no máximo ${PASSWORD_MAX_LENGTH} caracteres.`;
+  }
+
+  if (!PASSWORD_NUMBER_OR_SYMBOL_PATTERN.test(value)) {
+    return "A senha deve conter pelo menos um número ou símbolo.";
   }
 
   return undefined;
@@ -116,8 +149,11 @@ export function validateRegisterForm(
 ): ValidationResult<RegisterInput> {
   const name = readField(formData, "name").trim();
   const email = normalizeEmail(readField(formData, "email"));
+  const municipality = readField(formData, "municipality").trim();
   const password = readField(formData, "password");
   const passwordConfirmation = readField(formData, "passwordConfirmation");
+  const termsAccepted = readCheckbox(formData, "termsAccepted");
+  const marketingOptIn = readCheckbox(formData, "marketingOptIn");
 
   const errors: AuthFieldErrors = {};
 
@@ -132,6 +168,12 @@ export function validateRegisterForm(
   const emailError = validateEmail(email);
   if (emailError) errors.email = emailError;
 
+  if (!municipality) {
+    errors.municipality = "Selecione seu município.";
+  } else if (!isParaMunicipality(municipality)) {
+    errors.municipality = "Selecione um município do Pará.";
+  }
+
   const passwordError = validateNewPassword(password);
   if (passwordError) errors.password = passwordError;
 
@@ -141,11 +183,26 @@ export function validateRegisterForm(
   );
   if (confirmationError) errors.passwordConfirmation = confirmationError;
 
+  if (!termsAccepted) {
+    errors.termsAccepted =
+      "Você precisa aceitar os Termos de Uso e a Política de Privacidade.";
+  }
+
   if (Object.keys(errors).length > 0) {
     return { ok: false, errors };
   }
 
-  return { ok: true, data: { name, email, password } };
+  return {
+    ok: true,
+    data: {
+      name,
+      email,
+      municipality,
+      password,
+      termsAccepted,
+      marketingOptIn,
+    },
+  };
 }
 
 export function validateForgotPasswordForm(

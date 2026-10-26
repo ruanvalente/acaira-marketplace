@@ -8,7 +8,10 @@ import { AuthInput } from "./auth-input"
 type PasswordInputProps = Omit<
   React.ComponentProps<typeof AuthInput>,
   "type" | "endAdornment" | "icon"
->
+> & {
+  /** Ícone exibido à esquerda. Padrão: cadeado. */
+  icon?: React.ComponentProps<typeof AuthInput>["icon"]
+}
 
 /**
  * Campo de senha com controle acessível de visibilidade.
@@ -16,14 +19,18 @@ type PasswordInputProps = Omit<
  * O tipo do input alterna entre `password` e `text`; o botão mantém um
  * `aria-label` descritivo em cada estado.
  */
-export function PasswordInput({ id, ...props }: PasswordInputProps) {
+export function PasswordInput({
+  id,
+  icon: Icon = LockKeyhole,
+  ...props
+}: PasswordInputProps) {
   const [visible, setVisible] = React.useState(false)
 
   return (
     <AuthInput
       id={id}
       type={visible ? "text" : "password"}
-      icon={LockKeyhole}
+      icon={Icon}
       endAdornment={
         <button
           type="button"

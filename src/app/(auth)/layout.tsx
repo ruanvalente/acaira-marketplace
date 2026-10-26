@@ -9,7 +9,7 @@ import { AuthHeader } from "@/features/auth/components/auth-header"
  */
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex min-h-full flex-1 flex-col bg-surface-container-lowest">
+    <div className="flex min-h-full flex-1 flex-col bg-background">
       <AuthHeader />
       <div className="flex flex-1 flex-col">{children}</div>
       <AuthFooter />

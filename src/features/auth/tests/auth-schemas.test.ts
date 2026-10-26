@@ -76,13 +76,92 @@ describe("auth schemas", () => {
       }
     });
 
+    it("exige um município do Pará", () => {
+      const result = validateRegisterForm(
+        buildFormData({
+          name: "Maria Silva",
+          email: "maria@exemplo.com",
+          password: "senha-segura",
+          passwordConfirmation: "senha-segura",
+          termsAccepted: "on",
+        })
+      );
+
+      expect(result.ok).toBe(false);
+      if (!result.ok) {
+        expect(result.errors.municipality).toBe("Selecione seu município.");
+      }
+    });
+
+    it("rejeita municípios fora do Pará", () => {
+      const result = validateRegisterForm(
+        buildFormData({
+          name: "Maria Silva",
+          email: "maria@exemplo.com",
+          municipality: "São Paulo",
+          password: "senha-segura",
+          passwordConfirmation: "senha-segura",
+          termsAccepted: "on",
+        })
+      );
+
+      expect(result.ok).toBe(false);
+      if (!result.ok) {
+        expect(result.errors.municipality).toBe(
+          "Selecione um município do Pará."
+        );
+      }
+    });
+
+    it("exige aceite dos termos", () => {
+      const result = validateRegisterForm(
+        buildFormData({
+          name: "Maria Silva",
+          email: "maria@exemplo.com",
+          municipality: "Belém",
+          password: "senha-segura",
+          passwordConfirmation: "senha-segura",
+        })
+      );
+
+      expect(result.ok).toBe(false);
+      if (!result.ok) {
+        expect(result.errors.termsAccepted).toBe(
+          "Você precisa aceitar os Termos de Uso e a Política de Privacidade."
+        );
+      }
+    });
+
+    it("exige número ou símbolo na senha", () => {
+      const result = validateRegisterForm(
+        buildFormData({
+          name: "Maria Silva",
+          email: "maria@exemplo.com",
+          municipality: "Belém",
+          password: "senhasegura",
+          passwordConfirmation: "senhasegura",
+          termsAccepted: "on",
+        })
+      );
+
+      expect(result.ok).toBe(false);
+      if (!result.ok) {
+        expect(result.errors.password).toBe(
+          "A senha deve conter pelo menos um número ou símbolo."
+        );
+      }
+    });
+
     it("aceita dados válidos", () => {
       const result = validateRegisterForm(
         buildFormData({
           name: "  Maria Silva ",
           email: "Maria@Exemplo.com",
+          municipality: "Belém",
           password: "senha-segura",
           passwordConfirmation: "senha-segura",
+          termsAccepted: "on",
+          marketingOptIn: "on",
         })
       );
 
@@ -91,7 +170,10 @@ describe("auth schemas", () => {
         data: {
           name: "Maria Silva",
           email: "maria@exemplo.com",
+          municipality: "Belém",
           password: "senha-segura",
+          termsAccepted: true,
+          marketingOptIn: true,
         },
       });
     });

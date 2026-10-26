@@ -18,9 +18,14 @@ export type SignInInput = {
 export type SignUpInput = {
   name: string;
   email: string;
+  municipality: string;
   password: string;
+  termsAccepted: boolean;
+  marketingOptIn: boolean;
   emailRedirectTo: string;
 };
+
+const TERMS_VERSION = "2026-10";
 
 /**
  * Camada de serviço do Supabase Auth.
@@ -53,7 +58,13 @@ export async function signUpWithPassword(
       email: input.email,
       password: input.password,
       options: {
-        data: { display_name: input.name },
+        data: {
+          display_name: input.name,
+          municipality: input.municipality,
+          marketing_opt_in: input.marketingOptIn,
+          terms_accepted_at: new Date().toISOString(),
+          terms_version: TERMS_VERSION,
+        },
         emailRedirectTo: input.emailRedirectTo,
       },
     });

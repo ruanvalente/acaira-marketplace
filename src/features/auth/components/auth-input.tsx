@@ -10,6 +10,8 @@ type AuthInputProps = Omit<React.ComponentProps<typeof Input>, "id"> & {
   label: string
   error?: string
   hint?: string
+  /** ID de uma descrição externa (ex.: requisitos da senha). */
+  descriptionId?: string
   /** Ícone decorativo exibido à esquerda do campo. */
   icon?: LucideIcon
   /** Ação opcional alinhada à direita do label (ex.: "Esqueceu a senha?"). */
@@ -27,6 +29,7 @@ export function AuthInput({
   label,
   error,
   hint,
+  descriptionId,
   icon: Icon,
   labelAction,
   endAdornment,
@@ -36,8 +39,13 @@ export function AuthInput({
   const errorId = `${id}-error`
   const hintId = `${id}-hint`
   const describedBy =
-    [hint ? hintId : null, error ? errorId : null].filter(Boolean).join(" ") ||
-    undefined
+    [
+      descriptionId ?? null,
+      hint ? hintId : null,
+      error ? errorId : null,
+    ]
+      .filter(Boolean)
+      .join(" ") || undefined
 
   return (
     <div className="space-y-2">
