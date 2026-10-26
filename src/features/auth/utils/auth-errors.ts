@@ -1,12 +1,5 @@
 import type { AuthFailure } from "../types/auth.types";
 
-/**
- * Mensagens de erro de autenticação apresentadas ao usuário.
- *
- * Nenhuma mensagem crua do Supabase deve chegar à interface: detalhes de
- * infraestrutura, SQL ou tokens não são informação útil (nem segura) para
- * quem está usando o marketplace.
- */
 export const AUTH_ERROR_MESSAGES = {
   invalidCredentials: "E-mail ou senha incorretos.",
   emailNotConfirmed:
@@ -53,10 +46,6 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }
 
-/**
- * Normaliza qualquer erro recebido do Supabase (ou inesperado) em um objeto
- * simples e serializável.
- */
 export function toAuthFailure(error: unknown): AuthFailure {
   if (isRecord(error)) {
     return {
@@ -78,9 +67,6 @@ function matchesMessage(message: string, patterns: string[]): boolean {
   return patterns.some((pattern) => normalized.includes(pattern));
 }
 
-/**
- * Converte uma falha normalizada em uma mensagem segura para o usuário.
- */
 export function mapAuthError(failure: AuthFailure): string {
   if (failure.code && CODE_MESSAGES[failure.code]) {
     return CODE_MESSAGES[failure.code];
