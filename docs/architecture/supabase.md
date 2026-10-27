@@ -40,6 +40,32 @@ Use Supabase Auth for:
 
 The frontend must never implement its own authentication system.
 
+### 3.1 Auth implementation
+
+The auth module lives in `src/features/auth/` and follows these decisions:
+
+- Credentials are submitted through Server Actions and validated on both the
+  client (inline feedback) and the server (source of truth).
+- Supabase sessions are refreshed in `proxy.ts` (Next.js 16 replaced
+  `middleware.ts` with `proxy.ts`). Protected pages also call `requireUser`
+  on the server, so route protection never depends only on the proxy.
+- E-mail confirmation and password recovery links land on
+  `/auth/callback`, which exchanges the PKCE code for a session.
+- Registration sends `display_name` as user metadata. The `profiles` table
+  remains owned by the `profile` module.
+- Password reset requires the temporary session created by the recovery
+  link; without it, the reset page shows an expired-link state.
+
+Supabase Dashboard → Authentication → URL Configuration must include:
+
+```text
+Site URL:      <NEXT_PUBLIC_SITE_URL>
+Redirect URLs: <NEXT_PUBLIC_SITE_URL>/auth/callback
+```
+
+`NEXT_PUBLIC_SITE_URL` is optional in local development; when it is not
+set, the request host is used to build the redirect links.
+
 ## 4. Profiles
 
 Supabase Auth manages authentication identities.
