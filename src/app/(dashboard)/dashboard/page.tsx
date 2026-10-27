@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Suspense } from "react"
+import { connection } from "next/server"
 
 import { Skeleton } from "@/components/ui/skeleton"
 import { LogoutButton } from "@/features/auth/components/logout-button"
@@ -24,6 +25,7 @@ export default function DashboardPage() {
 }
 
 async function DashboardContent() {
+  await connection()
   const user = await requireUser("/dashboard")
 
   return (

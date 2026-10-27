@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { connection } from "next/server"
 
 import { Button } from "@/components/ui/button"
 import { LogoutButton } from "@/features/auth/components/logout-button"
@@ -11,6 +12,7 @@ import { getCurrentUser } from "@/features/auth/services/session.service"
  * apenas no cliente.
  */
 export async function HeaderAuth() {
+  await connection()
   const user = await getCurrentUser()
 
   if (!user) {
