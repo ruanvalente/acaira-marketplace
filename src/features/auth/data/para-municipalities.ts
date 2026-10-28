@@ -2,7 +2,7 @@
  * Municípios do Pará (IBGE, 2026).
  *
  * A lista é mantida no domínio de autenticação porque o cadastro inicial do
- * Açaíra atende apenas o estado do Pará. Quando a expansão regional acontecer,
+ * Ver-o-Preço atende apenas o estado do Pará. Quando a expansão regional acontecer,
  * o cadastro deve passar a resolver localidades por UF.
  */
 export const PARA_MUNICIPALITIES = [

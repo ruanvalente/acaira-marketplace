@@ -30,7 +30,7 @@ export const REGISTRATION_STATS: readonly RegistrationStat[] = [
 export const REGISTRATION_BENEFITS: readonly RegistrationBenefit[] = [
   {
     icon: MessageCircle,
-    title: "Converse sem sair do Açaíra",
+    title: "Converse sem sair do Ver-o-Preço",
     description:
       "Negocie pelo chat, tire dúvidas e combine os detalhes com mais segurança.",
   },

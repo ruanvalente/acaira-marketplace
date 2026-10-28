@@ -1,10 +1,10 @@
-# DESIGN.md — Açaíra Design System
+# DESIGN.md — Ver-o-Preço Design System
 
 ## 1. Purpose
 
-This document is the visual source of truth for the Açaíra marketplace.
+This document is the visual source of truth for the Ver-o-Preço marketplace.
 
-Açaíra is a regional marketplace initially focused on Pará, Brazil. Its visual identity should communicate:
+Ver-o-Preço is a regional marketplace initially focused on Pará, Brazil. Its visual identity should communicate:
 
 - Regional identity;
 - Trust;
@@ -113,17 +113,17 @@ Target WCAG 2.2 AA whenever practical.
 
 Working product name:
 
-**Açaíra**
+**Ver-o-Preço**
 
-The name combines a regional reference to açaí with a short, memorable marketplace-oriented identity.
+The name is a tribute to Ver-o-Peso, the iconic market of Belém, adapted with "preço" to reinforce the marketplace proposition.
 
-The name should be presented as a technology brand rather than as a literal representation of the fruit.
+The name should be presented as a modern technology brand rather than as a literal representation of the market or its products.
 
 ---
 
 ## 3.2 Brand Personality
 
-Açaíra should feel:
+Ver-o-Preço should feel:
 
 - Local;
 - Friendly;
@@ -1318,7 +1318,7 @@ Encontre o que você procura.
 Venda o que está parado.
 
 Tem algo para vender?
-Anuncie no Açaíra.
+Anuncie no Ver-o-Preço.
 
 Achou o que queria?
 Converse com o vendedor.
@@ -1458,7 +1458,7 @@ Before merging a significant visual change, verify:
 
 ### Brand
 
-- Does it feel like Açaíra?
+- Does it feel like Ver-o-Preço?
 - Is the Pará/Açaí identity present without being excessive?
 
 ### UX
@@ -1510,7 +1510,7 @@ If an existing component conflicts with the design system, prefer updating the c
 
 # 56. Final Design Direction
 
-Açaíra should look like:
+Ver-o-Preço should look like:
 
 > A modern, trustworthy and simple Brazilian marketplace with a subtle Pará/Açaí visual identity.
 

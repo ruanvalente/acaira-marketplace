@@ -17,7 +17,7 @@ export function SecurityTipCard() {
             <p className="text-sm leading-relaxed text-muted-foreground">
               Nunca informe códigos SMS ou tokens de e-mail a intermediários em
               feiras ou pontos de entrega de Belém e cidades do interior. O
-              suporte oficial Açaíra jamais solicita suas senhas.
+              suporte oficial Ver-o-Preço jamais solicita suas senhas.
             </p>
           </div>
         </div>

@@ -10,8 +10,8 @@ import { ResetPasswordForm } from "@/features/auth/components/reset-password-for
 import { getCurrentUser } from "@/features/auth/services/session.service"
 
 export const metadata: Metadata = {
-  title: "Redefinir senha | Açaíra",
-  description: "Defina uma nova senha para a sua conta Açaíra.",
+  title: "Redefinir senha | Ver-o-Preço",
+  description: "Defina uma nova senha para a sua conta Ver-o-Preço.",
 }
 
 export default function ResetPasswordPage() {

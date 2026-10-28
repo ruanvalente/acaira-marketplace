@@ -13,7 +13,7 @@ export function MainHeader() {
           href="/"
           className="rounded-sm text-lg font-semibold tracking-tight focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
         >
-          Açaíra
+          Ver-o-Preço
         </Link>
         <nav
           aria-label="Navegação principal"

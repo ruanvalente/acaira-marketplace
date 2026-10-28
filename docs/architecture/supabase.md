@@ -1,9 +1,9 @@
-# Açaíra --- Supabase Architecture
+# Ver-o-Preço --- Supabase Architecture
 
 ## 1. Purpose
 
 This document defines how Supabase is used as the backend platform for
-Açaíra.
+Ver-o-Preço.
 
 Supabase provides:
 

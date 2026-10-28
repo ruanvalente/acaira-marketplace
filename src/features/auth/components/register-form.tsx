@@ -220,7 +220,7 @@ export function RegisterForm() {
               updateField("marketingOptIn", checked)
             }
           >
-            Quero receber novidades, ofertas e dicas do Açaíra por e-mail.{" "}
+            Quero receber novidades, ofertas e dicas do Ver-o-Preço por e-mail.{" "}
             <span className="text-muted-foreground">(opcional)</span>
           </ConsentCheckbox>
         </div>

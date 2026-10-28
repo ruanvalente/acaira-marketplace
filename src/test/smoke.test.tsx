@@ -5,6 +5,6 @@ import Home from "@/app/(public)/page";
 describe("Home", () => {
   it("renders title", () => {
     render(<Home />);
-    expect(screen.getByText("Açaíra")).toBeDefined();
+    expect(screen.getByText("Ver-o-Preço")).toBeDefined();
   });
 });

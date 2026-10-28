@@ -33,7 +33,7 @@ export function RegistrationInfoPanel() {
       </h2>
 
       <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-        O Açaíra conecta vizinhos, empreendedores e histórias do Pará em uma
+        O Ver-o-Preço conecta vizinhos, empreendedores e histórias do Pará em uma
         praça digital simples, local e segura.
       </p>
 

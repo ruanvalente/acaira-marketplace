@@ -1,8 +1,8 @@
-# Açaíra --- Modules Architecture
+# Ver-o-Preço --- Modules Architecture
 
 ## 1. Purpose
 
-This document defines the responsibilities and boundaries of the Açaíra
+This document defines the responsibilities and boundaries of the Ver-o-Preço
 application modules.
 
 The project follows a **feature/module-first architecture**.
