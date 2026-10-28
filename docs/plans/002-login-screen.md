@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Implementar a tela de login do Açaíra com fidelidade visual à referência,
+Implementar a tela de login do Ver-o-Preço com fidelidade visual à referência,
 mantendo a autenticação existente (Supabase + Server Actions), a arquitetura
 feature-first e os tokens do `DESIGN.md`.
 

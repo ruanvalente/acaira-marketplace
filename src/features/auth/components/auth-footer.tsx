@@ -10,7 +10,7 @@ export function AuthFooter() {
     <footer className="border-t border-border bg-surface-container-low">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 px-4 py-6 text-center sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:text-left lg:px-8">
         <p className="text-xs text-muted-foreground">
-          © 2026 Açaíra Marketplace Pará. Todos os direitos reservados.
+          © 2026 Ver-o-Preço Marketplace Pará. Todos os direitos reservados.
         </p>
 
         <nav aria-label="Links institucionais">

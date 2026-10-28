@@ -84,7 +84,7 @@ export function RecoveryStepCard() {
         </Link>
         <div className="absolute bottom-6 right-6 hidden items-center gap-1.5 rounded-full bg-success-surface px-2.5 py-1 text-xs font-medium text-[#3B7668] sm:flex">
           <ShieldCheck aria-hidden="true" className="size-3.5" />
-          Açaíra Proteção Total
+          Proteção Total Ver-o-Preço
         </div>
       </CardContent>
     </Card>

@@ -7,8 +7,8 @@ import { ForgotPasswordForm } from "@/features/auth/components/forgot-password-f
 import { RedirectIfAuthenticated } from "@/features/auth/components/session-gate"
 
 export const metadata: Metadata = {
-  title: "Recuperar senha | Açaíra",
-  description: "Solicite um link para redefinir a senha da sua conta Açaíra.",
+  title: "Recuperar senha | Ver-o-Preço",
+  description: "Solicite um link para redefinir a senha da sua conta Ver-o-Preço.",
 }
 
 export default function ForgotPasswordPage() {

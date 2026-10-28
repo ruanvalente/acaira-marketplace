@@ -4,9 +4,9 @@ import { AccessRecoveryPage } from "@/features/auth/components/access-recovery/a
 import { AuthHeader } from "@/features/auth/components/shared/auth-header";
 
 export const metadata: Metadata = {
-  title: "Recuperação de Acesso | Açaíra",
+  title: "Recuperação de Acesso | Ver-o-Preço",
   description:
-    "Recupere o acesso à sua conta Açaíra com verificação segura e criptografia de ponta a ponta.",
+    "Recupere o acesso à sua conta Ver-o-Preço com verificação segura e criptografia de ponta a ponta.",
 };
 
 export default function AccessRecoveryRoute() {

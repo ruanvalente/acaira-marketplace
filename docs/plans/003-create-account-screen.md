@@ -2,7 +2,7 @@
 
 ## Objetivo
 
-Implementar a tela de criação de conta do Açaíra com fidelidade à referência
+Implementar a tela de criação de conta do Ver-o-Preço com fidelidade à referência
 visual, reutilizando o Design System, a autenticação existente (Supabase +
 Server Actions) e a arquitetura feature-first.
 

@@ -1,4 +1,4 @@
-# Design System — Açaíra
+# Design System — Ver-o-Preço
 
 This document is a reference for the design tokens and guidelines established in `DESIGN.md`.
 

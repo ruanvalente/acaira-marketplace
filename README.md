@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ver-o-Preço Marketplace
+
+Marketplace regional simples, local, moderno e confiável, com foco inicial no Pará.
 
 ## Getting Started
 

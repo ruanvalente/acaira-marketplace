@@ -5,7 +5,7 @@ export default function Home() {
     <main className="flex flex-1 flex-col items-center justify-center px-4 py-16">
       <div className="container mx-auto flex max-w-2xl flex-col items-center text-center">
         <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-          Açaíra
+          Ver-o-Preço
         </h1>
         <p className="mt-4 text-lg text-muted-foreground">
           Marketplace regional simples, local, moderno e confiável focado no Pará.

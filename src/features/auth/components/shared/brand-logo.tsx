@@ -14,7 +14,7 @@ export function BrandLogo({ className, showName = true }: BrandLogoProps) {
       </span>
       {showName ? (
         <span className="text-lg font-bold tracking-tight text-primary">
-          Açaíra
+          Ver-o-Preço
         </span>
       ) : null}
     </div>

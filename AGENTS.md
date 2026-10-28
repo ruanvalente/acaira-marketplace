@@ -8,7 +8,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
-# AGENTS.md — Açaíra Marketplace
+# AGENTS.md — Ver-o-Preço Marketplace
 
 ## Pacotes e ferramentas
 - Usar **bun** para instalação e execução de scripts/pacotes neste projeto (`bun add`, `bunx`, `bun dev`, etc.).
@@ -23,7 +23,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## 1. Project Overview
 
-**Açaíra** is a regional marketplace platform focused initially on Pará, Brazil.
+**Ver-o-Preço** is a regional marketplace platform focused initially on Pará, Brazil.
 
 The platform allows users to:
 
@@ -43,7 +43,7 @@ The platform allows users to:
 
 The product is conceptually inspired by marketplaces such as OLX and Mercado Livre, but **must not copy their visual identity, structure, or UX directly**.
 
-The Açaíra should feel like a:
+The Ver-o-Preço should feel like a:
 
 > Simple, local, modern and trustworthy marketplace.
 
@@ -756,7 +756,7 @@ Encontre o que você precisa.
 Venda o que não usa.
 
 Tem algo parado em casa?
-Venda no Açaíra.
+Venda no Ver-o-Preço.
 
 Converse com o vendedor.
 
@@ -1834,12 +1834,12 @@ When a decision affects multiple modules, document it.
 
 # 44. Final Architectural Principle
 
-The Açaíra must evolve as a collection of independent but cohesive features.
+The Ver-o-Preço must evolve as a collection of independent but cohesive features.
 
 The preferred mental model is:
 
 ```text
-AÇAÍRA
+VER-O-PREÇO
 │
 ├── Auth
 │

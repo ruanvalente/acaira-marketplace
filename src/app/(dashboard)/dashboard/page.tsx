@@ -7,7 +7,7 @@ import { LogoutButton } from "@/features/auth/components/logout-button"
 import { requireUser } from "@/features/auth/services/session.service"
 
 export const metadata: Metadata = {
-  title: "Minha conta | Açaíra",
+  title: "Minha conta | Ver-o-Preço",
 }
 
 /**

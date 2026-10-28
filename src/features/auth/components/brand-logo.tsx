@@ -9,7 +9,7 @@ type BrandLogoProps = {
 }
 
 /**
- * Marca textual do Açaíra.
+ * Marca textual do Ver-o-Preço.
  *
  * O símbolo é construído com um ícone Lucide para que possa ser substituído
  * pelo logo oficial sem alterar os pontos de uso.
@@ -21,7 +21,7 @@ export function BrandLogo({ showAuthBadge = false, className }: BrandLogoProps) 
         <Store aria-hidden="true" className="size-5" />
       </span>
       <span className="text-lg font-bold tracking-tight text-primary">
-        Açaíra
+        Ver-o-Preço
       </span>
       {showAuthBadge ? (
         <Badge

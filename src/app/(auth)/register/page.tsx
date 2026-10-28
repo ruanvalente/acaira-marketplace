@@ -7,9 +7,9 @@ import { RegisterForm } from "@/features/auth/components/register-form"
 import { RedirectIfAuthenticated } from "@/features/auth/components/session-gate"
 
 export const metadata: Metadata = {
-  title: "Criar conta | Açaíra",
+  title: "Criar conta | Ver-o-Preço",
   description:
-    "Crie sua conta Açaíra para comprar, vender e conversar com gente do Pará.",
+    "Crie sua conta Ver-o-Preço para comprar, vender e conversar com gente do Pará.",
 }
 
 export default function RegisterPage() {

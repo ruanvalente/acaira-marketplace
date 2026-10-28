@@ -7,8 +7,8 @@ import { LoginPage } from "@/features/auth/components/login-page"
 import { RedirectIfAuthenticated } from "@/features/auth/components/session-gate"
 
 export const metadata: Metadata = {
-  title: "Entrar | Açaíra",
-  description: "Acesse sua conta Açaíra para anunciar e conversar com vendedores.",
+  title: "Entrar | Ver-o-Preço",
+  description: "Acesse sua conta Ver-o-Preço para anunciar e conversar com vendedores.",
 }
 
 export default function LoginRoute() {
