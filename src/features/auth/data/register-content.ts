@@ -54,5 +54,5 @@ export const REGISTRATION_PRIVACY = {
   description:
     "Usamos suas informações para criar e manter sua conta segura. Você escolhe o que quer receber e pode alterar suas preferências quando quiser.",
   linkLabel: "Entenda como cuidamos dos seus dados",
-  linkHref: "/privacidade",
+  linkHref: "/privacy",
 } as const

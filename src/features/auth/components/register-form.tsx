@@ -202,11 +202,11 @@ export function RegisterForm() {
             error={errors.termsAccepted}
           >
             Li e aceito os{" "}
-            <Link href="/termos" className={LINK_CLASS}>
+            <Link href="/terms" className={LINK_CLASS}>
               Termos de Uso
             </Link>{" "}
             e a{" "}
-            <Link href="/privacidade" className={LINK_CLASS}>
+            <Link href="/privacy" className={LINK_CLASS}>
               Política de Privacidade
             </Link>
             .

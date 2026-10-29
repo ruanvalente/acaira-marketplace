@@ -4,9 +4,11 @@ import { useState, useRef } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Camera, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+
+import { AVATAR_BUCKET_NAME } from "../constants";
 import { uploadAvatarClient } from "../services/profile-storage.service";
 import { updateAvatarAction } from "../services/profile.actions";
-import { toast } from "sonner";
 
 type ProfileAvatarProps = {
   userId: string;
@@ -52,7 +54,7 @@ export function ProfileAvatar({
         // Get public URL
         const supabase = (await import("@/lib/supabase/client")).createClient();
         const { data } = supabase.storage
-          .from("veropreco/avatar/profile")
+          .from(AVATAR_BUCKET_NAME)
           .getPublicUrl(result.avatarPath);
 
         setCurrentAvatarUrl(data.publicUrl);

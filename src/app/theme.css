@@ -62,6 +62,7 @@
   --success-surface: #ecfdf5;
 
   --warning: #d97706;
+  --warning-strong: #b45309;
   --warning-foreground: #ffffff;
   --warning-surface: #fffbeb;
 
@@ -191,6 +192,7 @@
   --success-surface: #052e22;
 
   --warning: #fbbf24;
+  --warning-strong: #fcd34d;
   --warning-foreground: #3b2600;
   --warning-surface: #33260a;
 
@@ -301,6 +303,7 @@
   --color-success-surface: var(--success-surface);
 
   --color-warning: var(--warning);
+  --color-warning-strong: var(--warning-strong);
   --color-warning-foreground: var(--warning-foreground);
   --color-warning-surface: var(--warning-surface);
 

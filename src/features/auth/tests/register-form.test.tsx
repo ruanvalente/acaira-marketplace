@@ -66,10 +66,10 @@ describe("RegisterForm", () => {
 
     expect(
       screen.getByRole("link", { name: "Termos de Uso" })
-    ).toHaveAttribute("href", "/termos");
+    ).toHaveAttribute("href", "/terms");
     expect(
       screen.getByRole("link", { name: "Política de Privacidade" })
-    ).toHaveAttribute("href", "/privacidade");
+    ).toHaveAttribute("href", "/privacy");
   });
 
   it("valida os campos obrigatórios antes de chamar o servidor", async () => {
