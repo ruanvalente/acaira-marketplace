@@ -61,7 +61,7 @@ export type FooterLink = {
 }
 
 export const AUTH_FOOTER_LINKS: readonly FooterLink[] = [
-  { label: "Privacidade", href: "/privacidade" },
-  { label: "Termos de Serviço", href: "/termos" },
+  { label: "Privacidade", href: "/privacy" },
+  { label: "Termos de Serviço", href: "/terms" },
   { label: "Suporte Regional", href: "/suporte" },
 ]
