@@ -65,7 +65,7 @@ export function HeroSection() {
                 size="lg"
                 className="h-12 px-6 text-base"
               >
-                <Link href="/products">
+                <Link href="/">
                   <Search aria-hidden="true" className="size-4" />
                   Explorar produtos
                 </Link>

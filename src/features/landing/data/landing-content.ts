@@ -225,7 +225,7 @@ export const footerColumns: LandingFooterColumn[] = [
   {
     title: "Para compradores",
     links: [
-      { label: "Explorar produtos", href: "/products" },
+      { label: "Explorar produtos", href: "/" },
       { label: "Como comprar", href: "#como-funciona" },
       { label: "Chat seguro", href: "#seguranca" },
       { label: "Polos no Pará", href: "#polos" },
