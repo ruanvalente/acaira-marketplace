@@ -3,26 +3,23 @@ import { ArrowRight, PackageSearch } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
-import {
-  mockProducts,
-  TOTAL_RECENT_LISTINGS,
-} from "../../data/marketplace-content"
-import type { Product } from "../../types/marketplace.types"
+import type { ProductSummary } from "../../types/product.types"
 import { formatCount } from "../../utils/format"
 import { ProductCard } from "../product-card"
 import { SectionHeader } from "./section-header"
 
 type RecentListingsProps = {
-  products?: Product[]
+  products: ProductSummary[]
+  total: number
 }
 
 /**
  * Vitrine de anúncios recém-publicados.
  *
- * Recebe os produtos por prop para que a origem dos dados possa ser trocada
- * pela camada de serviços sem alterar a composição visual.
+ * Recebe os produtos já mapeados pelo serviço de produtos. A composição visual
+ * é independente da origem dos dados.
  */
-export function RecentListings({ products = mockProducts }: RecentListingsProps) {
+export function RecentListings({ products, total }: RecentListingsProps) {
   return (
     <section aria-labelledby="recentes-title">
       <div className="flex flex-col gap-4">
@@ -35,7 +32,7 @@ export function RecentListings({ products = mockProducts }: RecentListingsProps)
               href="/products"
               className="inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-sm font-semibold text-primary transition-colors hover:bg-primary-muted focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
             >
-              Ver todos ({formatCount(TOTAL_RECENT_LISTINGS)})
+              {total > 0 ? `Ver todos (${formatCount(total)})` : "Explorar catálogo"}
               <ArrowRight aria-hidden="true" className="size-4" />
             </Link>
           }
@@ -44,9 +41,9 @@ export function RecentListings({ products = mockProducts }: RecentListingsProps)
         <p className="inline-flex w-fit items-center gap-2 rounded-full bg-success-surface px-3 py-1 text-label-sm font-medium text-success-strong">
           <span
             aria-hidden="true"
-            className="size-2 rounded-full bg-success motion-safe:animate-pulse"
+            className="size-2 rounded-full bg-success"
           />
-          Atualizado há 4 min
+          Anúncios ativos agora
         </p>
       </div>
 

@@ -1,25 +1,67 @@
-import { describe, expect, it } from "vitest"
-import { render, screen } from "@testing-library/react"
+import { beforeEach, describe, expect, it, vi } from "vitest"
 
-import ProductDetailPage from "@/app/(public)/products/[id]/page"
-import { mockProducts } from "../data/marketplace-content"
+import { generateMetadata } from "@/app/(public)/products/[id]/page"
+import { getProductById } from "../services/products.service"
+import { productDetailFixture } from "./fixtures"
 
-describe("ProductDetailPage", () => {
-  it("renderiza o anúncio correspondente ao id", async () => {
-    const product = mockProducts[0]
+vi.mock("../services/products.service", () => ({
+  getProductById: vi.fn(),
+  getRelatedProducts: vi.fn(),
+}))
 
-    render(
-      await ProductDetailPage({
-        params: Promise.resolve({ id: product.id }),
+vi.mock("@/features/auth/services/session.service", () => ({
+  getCurrentUser: vi.fn(),
+}))
+
+const mockedGetProductById = vi.mocked(getProductById)
+
+const params = Promise.resolve({ id: productDetailFixture.id })
+
+describe("ProductDetailPage metadata", () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it("gera título e descrição a partir do anúncio ativo", async () => {
+    mockedGetProductById.mockResolvedValue({
+      ok: true,
+      data: productDetailFixture,
+    })
+
+    const metadata = await generateMetadata({ params })
+
+    expect(metadata.title).toBe(
+      "iPhone 15 Pro 256GB Titânio Natural — Ver-o-Preço",
+    )
+    expect(metadata.description).toBe(
+      "iPhone 15 Pro 256GB Titânio Natural por R$ 4.500 em Belém - Nazaré. Negocie pelo chat do Ver-o-Preço.",
+    )
+    expect(metadata.openGraph).toEqual(
+      expect.objectContaining({
+        title: "iPhone 15 Pro 256GB Titânio Natural — Ver-o-Preço",
+        locale: "pt_BR",
+        siteName: "Ver-o-Preço",
+        type: "website",
       }),
     )
+  })
 
-    expect(
-      screen.getByRole("heading", { level: 1, name: product.title }),
-    ).toBeInTheDocument()
-    expect(screen.getByText("R$ 4.500")).toBeInTheDocument()
-    expect(
-      screen.getByRole("link", { name: "Voltar para o início" }),
-    ).toHaveAttribute("href", "/")
+  it("usa um título de não encontrado para anúncios inexistentes ou inativos", async () => {
+    mockedGetProductById.mockResolvedValue({ ok: true, data: null })
+
+    await expect(generateMetadata({ params })).resolves.toEqual({
+      title: "Anúncio não encontrado — Ver-o-Preço",
+    })
+  })
+
+  it("usa um título seguro quando a consulta falha", async () => {
+    mockedGetProductById.mockResolvedValue({
+      ok: false,
+      error: "Não foi possível carregar este anúncio.",
+    })
+
+    await expect(generateMetadata({ params })).resolves.toEqual({
+      title: "Anúncio indisponível — Ver-o-Preço",
+    })
   })
 })
