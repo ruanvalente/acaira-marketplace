@@ -1,49 +1,42 @@
 import type { Metadata } from "next"
-import Link from "next/link"
-import { PackageSearch } from "lucide-react"
+import { Suspense } from "react"
 
-import { Button } from "@/components/ui/button"
+import { ProductsCatalog } from "@/features/products/components/catalog/products-catalog"
+import { ProductsCatalogSkeleton } from "@/features/products/components/catalog/products-catalog-skeleton"
 
 export const metadata: Metadata = {
   title: "Explorar produtos — Ver-o-Preço",
   description:
-    "Catálogo de produtos do Ver-o-Preço Marketplace no Pará. Anúncios organizados por município para comprar e vender perto de você.",
+    "Catálogo de produtos do Ver-o-Preço Marketplace no Pará. Busque por categoria, condição, preço e município para comprar e vender perto de você.",
+}
+
+type ProductsPageProps = {
+  searchParams: Promise<Record<string, string | string[] | undefined>>
 }
 
 /**
- * Destino provisório do CTA "Explorar produtos" da landing page.
+ * Catálogo público de produtos.
  *
- * O catálogo público pertence ao módulo de produtos (fase 4 do MVP). Enquanto
- * ele não existe, esta página evita um 404 e direciona o visitante para o
- * cadastro.
+ * O cabeçalho é estático e entra no shell da página. Os resultados dependem de
+ * `searchParams` e são transmitidos dentro de um limite de Suspense próprio.
  */
-export default function ProductsPage() {
+export default function ProductsPage({ searchParams }: ProductsPageProps) {
   return (
-    <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col items-center px-4 py-16 text-center sm:py-20">
-      <span
-        aria-hidden="true"
-        className="flex size-14 items-center justify-center rounded-2xl bg-primary-muted text-primary"
-      >
-        <PackageSearch className="size-7" />
-      </span>
+    <main className="mx-auto w-full max-w-[1320px] flex-1 px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12">
+      <header className="max-w-3xl">
+        <h1 className="text-balance text-headline-lg-mobile font-bold tracking-tight text-foreground sm:text-headline-lg">
+          Explorar produtos
+        </h1>
+        <p className="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
+          Encontre o que você precisa perto de casa. Filtre por categoria,
+          condição, preço e região para ver anúncios de todo o Pará.
+        </p>
+      </header>
 
-      <h1 className="mt-6 text-balance text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-        Catálogo em construção
-      </h1>
-
-      <p className="mt-4 text-pretty text-base leading-relaxed text-muted-foreground">
-        Estamos organizando os anúncios por município para você encontrar o que
-        precisa perto de casa. Enquanto isso, já é possível anunciar o que está
-        parado.
-      </p>
-
-      <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-        <Button asChild size="lg">
-          <Link href="/register">Quero anunciar</Link>
-        </Button>
-        <Button asChild variant="outline" size="lg">
-          <Link href="/">Voltar para o início</Link>
-        </Button>
+      <div className="mt-8">
+        <Suspense fallback={<ProductsCatalogSkeleton />}>
+          <ProductsCatalog searchParams={searchParams} />
+        </Suspense>
       </div>
     </main>
   )

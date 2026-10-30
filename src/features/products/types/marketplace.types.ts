@@ -1,27 +1,13 @@
 import type { LucideIcon } from "lucide-react"
 
 /**
- * Tipos do domínio de descoberta de produtos.
+ * Tipos de apresentação do domínio de descoberta de produtos.
  *
  * A home do marketplace é intencionalmente desacoplada da origem dos dados:
  * os componentes recebem estes tipos de domínio e não conhecem o formato
- * retornado pelo Supabase.
+ * retornado pelo Supabase. O modelo canônico de leitura vive em
+ * `product.types.ts`.
  */
-
-export type ProductCondition = "Novo" | "Seminovo" | "Excelente" | "Bom estado"
-
-export type Product = {
-  id: string
-  title: string
-  price: number
-  image: string
-  imageAlt: string
-  condition: ProductCondition
-  location: string
-  seller: string
-  publishedAt: string
-  categoryId: string
-}
 
 export type CategoryTone =
   | "primary"

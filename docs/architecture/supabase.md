@@ -112,31 +112,35 @@ them.
 
 ## 6. Products
 
-Suggested structure:
+Implemented in `migrations/0003_products.sql` as the public read domain.
+Listing creation and seller mutations belong to the `listings` module.
 
 ```text
 products
 ├── id
-├── seller_id
-├── category_id
+├── seller_id          → profiles(id)
+├── category_id        → categories(id)
 ├── title
 ├── description
-├── price
-├── condition
-├── location
-├── contact_phone
-├── contact_email
-├── status
+├── price              numeric(12, 2)
+├── condition          new | like_new | excellent | good
+├── city
+├── neighborhood       nullable
+├── status             draft | active | paused | sold | removed
 ├── created_at
 └── updated_at
 ```
 
-The exact schema should be finalized during the Products/Listings
-implementation phase.
+`city` and `neighborhood` are stored separately; the UI renders
+`City - Neighborhood`. Contact phone/e-mail are intentionally not part of the
+public read model — contact happens through chat.
+
+`categories` holds the reference data (`slug`, `name`, `sort_order`) and is
+publicly readable. `category_listing_counts` is a `security_invoker` view that
+exposes active product counts per category, so the catalog never fetches every
+product to render a badge.
 
 ## 7. Product Status
-
-Suggested statuses:
 
 ```text
 draft
@@ -146,7 +150,9 @@ sold
 removed
 ```
 
-Only `active` products should appear in the public marketplace.
+Only `active` products appear in the public marketplace. Public queries always
+filter by `status = 'active'`; RLS enforces the same rule server-side, so the
+status sent by a client is never trusted.
 
 ## 8. Product Images
 
@@ -154,29 +160,33 @@ Use:
 
 ```text
 product_images
+├── id
+├── product_id         → products(id) ON DELETE CASCADE
+├── storage_path
+├── alt_text
+├── sort_order
+├── is_primary
+└── created_at
 ```
 
-Suggested fields:
+Images live in the public `product-images` bucket. Uploads are restricted to
+the seller's own folder (`<auth.uid()>/...`); reads are public because the
+catalog is public. A partial unique index guarantees at most one primary image
+per product.
 
-```text
-id
-product_id
-storage_path
-sort_order
-is_primary
-created_at
+### Applying the products schema
+
+```bash
+# Apply the schema with the Supabase SQL editor or psql.
+psql "$DATABASE_URL" -f migrations/0003_products.sql
+
+# Development seed (requires at least one profile).
+psql "$DATABASE_URL" -f seeds/0001_products.sql
 ```
 
-Product images should be stored in Supabase Storage.
-
-Recommended conceptual bucket:
-
-```text
-product-images
-```
-
-The exact public/private strategy must follow the final product
-requirements.
+The seed is idempotent and attaches demo listings to the oldest profile. It
+uses local images under `public/products/` so the catalog works without
+uploading files to Storage.
 
 ## 9. Storage
 

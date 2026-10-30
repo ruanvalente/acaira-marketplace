@@ -2,10 +2,8 @@ import { ChevronDown, LayoutGrid, MapPin, Search } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
-import {
-  marketplacePolos,
-  popularCategories,
-} from "../../data/marketplace-content"
+import { marketplacePolos } from "../../data/marketplace-content"
+import { categoryNavigationItems } from "../../data/category-navigation"
 
 /**
  * Busca principal da home.
@@ -92,11 +90,13 @@ export function HeroSearchBar() {
             className="h-full w-full appearance-none bg-transparent pr-6 text-sm font-medium text-foreground outline-none"
           >
             <option value="">Todas</option>
-            {popularCategories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
+            {categoryNavigationItems
+              .filter((category) => category.id !== "todas")
+              .map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.label}
+                </option>
+              ))}
           </select>
           <ChevronDown
             aria-hidden="true"

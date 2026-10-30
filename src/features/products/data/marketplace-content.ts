@@ -1,44 +1,23 @@
 import {
-  Bike,
-  Car,
-  Gamepad2,
   Handshake,
-  Headphones,
-  Laptop,
   MessageSquareLock,
   ShieldCheck,
-  Shirt,
-  Smartphone,
-  Sofa,
 } from "lucide-react"
 
 import type {
-  Category,
   FooterColumn,
   MarketplacePolo,
   PopularSearch,
-  Product,
   SellStep,
   TrustItem,
 } from "../types/marketplace.types"
 
 /**
- * Conteúdo mock da home do marketplace.
+ * Conteúdo estático de apresentação da home do marketplace.
  *
- * Tudo aqui é dado de apresentação. Quando a camada de serviços do módulo de
- * produtos for integrada ao Supabase, os componentes poderão receber os mesmos
- * tipos a partir de `features/products/services/`.
+ * Categorias e anúncios vêm da camada de serviços de produtos. Este arquivo
+ * mantém apenas conteúdo editorial e navegação.
  */
-
-/**
- * Data de referência usada para os rótulos relativos enquanto os anúncios são
- * mockados.
- *
- * Cache Components exige que valores dependentes do relógio sejam tratados
- * explicitamente. Ao integrar dados reais, o tempo relativo deve ser calculado
- * em um ponto de renderização dinâmico (ou em um Client Component).
- */
-export const MARKETPLACE_REFERENCE_DATE = "2026-10-29T12:00:00-03:00"
 
 export const marketplacePolos: MarketplacePolo[] = [
   { value: "belem", label: "Belém e Região Metropolitana" },
@@ -54,173 +33,6 @@ export const popularSearches: PopularSearch[] = [
   { label: "Mesa de escritório", query: "mesa de escritório" },
   { label: "Bicicleta aro 29", query: "bicicleta aro 29" },
   { label: "Geladeira Frost Free", query: "geladeira frost free" },
-]
-
-export const popularCategories: Category[] = [
-  {
-    id: "celulares",
-    name: "Celulares",
-    icon: Smartphone,
-    count: 248,
-    tone: "primary",
-    href: "/products?category=celulares",
-  },
-  {
-    id: "eletronicos",
-    name: "Eletrônicos",
-    icon: Headphones,
-    count: 186,
-    tone: "secondary",
-    href: "/products?category=eletronicos",
-  },
-  {
-    id: "informatica",
-    name: "Informática",
-    icon: Laptop,
-    count: 132,
-    tone: "featured",
-    href: "/products?category=informatica",
-  },
-  {
-    id: "casa-moveis",
-    name: "Casa & Móveis",
-    icon: Sofa,
-    count: 96,
-    tone: "success",
-    href: "/products?category=casa-moveis",
-  },
-  {
-    id: "veiculos",
-    name: "Veículos",
-    icon: Car,
-    count: 74,
-    tone: "warning",
-    href: "/products?category=veiculos",
-  },
-  {
-    id: "moda",
-    name: "Moda",
-    icon: Shirt,
-    count: 63,
-    tone: "primary",
-    href: "/products?category=moda",
-  },
-  {
-    id: "games",
-    name: "Games",
-    icon: Gamepad2,
-    count: 58,
-    tone: "secondary",
-    href: "/products?category=games",
-  },
-  {
-    id: "esportes",
-    name: "Esportes",
-    icon: Bike,
-    count: 41,
-    tone: "success",
-    href: "/products?category=esportes",
-  },
-]
-
-export const mockProducts: Product[] = [
-  {
-    id: "iphone-15-pro-256gb",
-    title: "iPhone 15 Pro 256GB Titânio Natural",
-    price: 4500,
-    image: "/products/iphone.png",
-    imageAlt:
-      "iPhone 15 Pro na cor titânio natural, com módulo de câmeras visível",
-    condition: "Seminovo",
-    location: "Belém - Nazaré",
-    seller: "Lucas M.",
-    publishedAt: "2026-10-29T11:35:00-03:00",
-    categoryId: "celulares",
-  },
-  {
-    id: "playstation-5-dois-controles",
-    title: "PlayStation 5 com 2 controles e 3 jogos",
-    price: 3200,
-    image: "/products/playstation.png",
-    imageAlt: "Console PlayStation 5 branco acompanhado de um controle",
-    condition: "Excelente",
-    location: "Ananindeua - Centro",
-    seller: "Rafael S.",
-    publishedAt: "2026-10-29T11:18:00-03:00",
-    categoryId: "games",
-  },
-  {
-    id: "mesa-escritorio-em-l",
-    title: "Mesa de escritório em L com gavetas",
-    price: 480,
-    image: "/products/desk.png",
-    imageAlt: "Mesa de escritório em L com monitor e luminária",
-    condition: "Bom estado",
-    location: "Belém - Umarizal",
-    seller: "Camila R.",
-    publishedAt: "2026-10-29T11:02:00-03:00",
-    categoryId: "casa-moveis",
-  },
-  {
-    id: "bicicleta-aro-29-shimano",
-    title: "Bicicleta aro 29 Shimano 21 marchas",
-    price: 1450,
-    image: "/products/bike.png",
-    imageAlt: "Bicicleta aro 29 preta com detalhes em roxo",
-    condition: "Seminovo",
-    location: "Marituba - Centro",
-    seller: "Diego A.",
-    publishedAt: "2026-10-29T10:12:00-03:00",
-    categoryId: "esportes",
-  },
-  {
-    id: "geladeira-frost-free-375l",
-    title: "Geladeira Frost Free 375L Inox",
-    price: 1890,
-    image: "/products/fridge.png",
-    imageAlt: "Geladeira Frost Free inox de duas portas",
-    condition: "Bom estado",
-    location: "Belém - Guamá",
-    seller: "Patrícia L.",
-    publishedAt: "2026-10-29T09:48:00-03:00",
-    categoryId: "casa-moveis",
-  },
-  {
-    id: "macbook-air-m2-13",
-    title: "MacBook Air M2 13 polegadas 8GB/256GB",
-    price: 6200,
-    image: "/products/macbook.png",
-    imageAlt: "Notebook MacBook Air aberto com tela clara",
-    condition: "Excelente",
-    location: "Belém - Batista Campos",
-    seller: "André P.",
-    publishedAt: "2026-10-29T08:55:00-03:00",
-    categoryId: "informatica",
-  },
-  {
-    id: "sofa-tres-lugares-retratil",
-    title: "Sofá 3 lugares retrátil e reclinável",
-    price: 1200,
-    image: "/products/sofa.png",
-    imageAlt: "Sofá de três lugares verde com almofada roxa",
-    condition: "Bom estado",
-    location: "Ananindeua - Cidade Nova",
-    seller: "Juliana T.",
-    publishedAt: "2026-10-29T08:10:00-03:00",
-    categoryId: "casa-moveis",
-  },
-  {
-    id: "fone-bluetooth-anc",
-    title: "Fone Bluetooth com cancelamento de ruído",
-    price: 320,
-    image: "/products/headphones.png",
-    imageAlt: "Fone de ouvido over-ear preto com detalhes roxos",
-    condition: "Novo",
-    location: "Castanhal - Centro",
-    seller: "Marcos V.",
-    publishedAt: "2026-10-29T07:24:00-03:00",
-    categoryId: "eletronicos",
-  },
 ]
 
 export const sellSteps: SellStep[] = [
@@ -308,5 +120,3 @@ export const marketplaceFooterLegalLinks = [
   { label: "Termos de uso", href: "/terms" },
   { label: "Política de cookies", href: "/cookies" },
 ] as const
-
-export const TOTAL_RECENT_LISTINGS = 1248
