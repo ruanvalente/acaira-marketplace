@@ -1,12 +1,13 @@
-import type { ReactNode } from "react"
+import type { ReactNode } from "react";
 
-import { MainHeader } from "@/components/layout"
+import { MarketplaceFooter, MarketplaceHeader } from "@/components/layout";
 
 export default function PublicLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex flex-1 flex-col">
-      <MainHeader />
+    <div className="flex flex-1 flex-col bg-background">
+      <MarketplaceHeader />
       {children}
+      <MarketplaceFooter />
     </div>
-  )
+  );
 }
